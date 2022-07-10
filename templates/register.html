@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Registration Page</h2>
+
+
+<form action="" method="post">
+
+    <div class="mb-3">
+        <label class="form-label" for="teamName">Name of Team</label>
+        <input aria-describedby="teamNameHelp" value="{{ data_dict['team_name'] if data_dict.get('team_name') }}" class="form-control" id="teamName" name="team_name" required type="text">
+        <div class="form-text" id="teamNameHelp">Enter Name of Team.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="teamLeaderEmail">Email Address of Team Leader</label>
+        <input aria-describedby="teamLeaderEmailHelp" value="{{ data_dict['team_leader_email'] if data_dict.get('team_leader_email') }}" class="form-control" id="teamLeaderEmail" name="team_leader_email" required
+               type="email">
+        <div class="form-text" id="teamLeaderEmailHelp">Enter Email Address of Team Leader.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="teamMember1Email">Email Address of Team Member 1</label>
+        <input aria-describedby="helpTeamMember1Email" value="{{ data_dict['team_mem1_email'] if data_dict.get('team_mem1_email') }}" class="form-control" id="teamMember1Email" name="team_mem1_email"
+               type="email">
+        <div class="form-text" id="helpTeamMember1Email">Enter Email Address of Team Member 1.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="teamMember2Email">Email Address of Team Member 2</label>
+        <input aria-describedby="helpTeamMember2Email" value="{{ data_dict['team_mem2_email'] if data_dict.get('team_mem2_email') }}" class="form-control" id="teamMember2Email" name="team_mem2_email"
+               type="email">
+        <div class="form-text" id="helpTeamMember2Email">Enter Email Address of Team Member 2.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-control" value="{{ data_dict['password'] if data_dict.get('password') }}" id="password" name="password" required type="password">
+        <div class="form-text" id="passwordHelp">
+            Your password must be 8-20 characters long, contain letters and numbers, and must not contain
+            spaces,
+            special characters, or emoji.
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="confirmPassword">Confirm Password</label>
+        <input class="form-control" value="{{ data_dict['confirm_password'] if data_dict.get('confirm_password') }}" id="confirmPassword" name="confirm_password" required type="password">
+    </div>
+
+    <div class="mb-3 form-check">
+        <input class="form-check-input" id="check" required type="checkbox">
+        <label class="form-check-label" for="check">I agree to <a href="{{ url_for('t_n_c') }}">T&C</a>.</label>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+
+</form>
+
+
+{% endblock %}
