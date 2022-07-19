@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Login Page</h2>
+
+
+<form method="post" action="">
+    <div class="mb-3">
+        <label class="form-label" for="exampleInputEmail1">Email</label>
+        <input aria-describedby="emailHelp" class="form-control" id="exampleInputEmail1" name="mentor_email" type="text">
+        <div class="form-text" id="emailHelp">Enter registered email address.</div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="exampleInputPassword1">Password</label>
+        <input class="form-control" id="exampleInputPassword1" name="password" type="password">
+        <div class="form-text" id="passwordHelpBlock">
+            Enter password chosen at the time of registration.
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+{% endblock %}

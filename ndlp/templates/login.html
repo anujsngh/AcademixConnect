@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Login Page</h2>
+
+<form action="" method="post">
+    <div class="mb-3">
+        <label class="form-label" for="userType">Login As</label>
+        <select name="user_type" id="userType" aria-label="Default select example" class="form-select">
+            <option selected value="student">Student</option>
+            <option value="mentor">Mentor</option>
+            <option value="team">Team</option>
+        </select>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+{% endblock %}

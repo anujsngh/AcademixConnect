@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Upload Project</h1>
+<h6><strong>Team ID :</strong> {{ team_id }}</h6>
+
+<form action="" method="post">
+
+    <div class="mb-3">
+        <label class="form-label" for="project_title">Title</label>
+        <input aria-describedby="projectTitleHelp" class="form-control"
+               id="project_title" name="project_title" required type="text">
+        <div class="form-text" id="projectTitleHelp">Enter title of the project.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="project_theme">Theme</label>
+        <select aria-describedby="projectThemeHelp" aria-label="Default select example" class="form-select"
+                id="project_theme" name="project_theme">
+            <option selected>Blockchain</option>
+            <option value="1">Smart Education</option>
+            <option value="2">Agriculture</option>
+            <option value="3">Smart Automation</option>
+            <option value="4">Other</option>
+        </select>
+        <div class="form-text" id="projectThemeHelp">Select theme of the project.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="project_category">Category</label>
+        <select aria-describedby="projectCategoryHelp" aria-label="Default select example" class="form-select"
+                id="project_category" name="project_category">
+            <option selected>Blockchain</option>
+            <option value="1">Smart Education</option>
+            <option value="2">Agriculture</option>
+            <option value="3">Smart Automation</option>
+            <option value="4">Other</option>
+        </select>
+        <div class="form-text" id="projectCategoryHelp">Select category of the project.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="project_tech_stack">Tech Stack</label>
+        <input aria-describedby="projectTechStackHelp" class="form-control"
+               id="project_tech_stack" name="project_tech_stack" required type="text">
+        <div class="form-text" id="projectTechStackHelp">Enter tech stack of the project separated by comma.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="project_ppt_link">Project PPT Link</label>
+        <input aria-describedby="projectPptLinkHelp" class="form-control"
+               id="project_ppt_link" name="project_ppt_link" required type="text">
+        <div class="form-text" id="projectPptLinkHelp">Enter google drive link of ppt of the project.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="project_report_link">Project Report Link</label>
+        <input aria-describedby="projectReportLinkHelp" class="form-control"
+               id="project_report_link" name="project_report_link" required type="text">
+        <div class="form-text" id="projectReportLinkHelp">Enter google drive link of project report of the project.</div>
+    </div>
+
+
+    {#
+    <!--    <div class="mb-3">-->
+    <!--        <label class="form-label" for="teamLeaderEmail">Description</label>-->
+    <!--        <input aria-describedby="teamLeaderEmailHelp"-->
+    <!--               class="form-control" id="teamLeaderEmail"-->
+    <!--               name="team_leader_email" required type="email"-->
+    <!--               value="{{ data_dict['team_leader_email'] if data_dict.get('team_leader_email') }}">-->
+    <!--        <div class="form-text" id="teamLeaderEmailHelp">Enter description of the project.</div>-->
+    <!--    </div>-->
+    #}
+
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+
+</form>
+
+{% endblock %}

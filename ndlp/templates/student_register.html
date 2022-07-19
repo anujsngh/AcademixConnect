@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Student Registration Page</h2>
+
+
+<form action="" method="post">
+
+    <div class="mb-3">
+        <label class="form-label" for="studentName">Full Name</label>
+        <input aria-describedby="studentNameHelp" value="{{ data_dict['student_name'] if data_dict.get('student_name') }}" class="form-control" id="studentName" name="student_name" required type="text">
+        <div class="form-text" id="studentNameHelp">Enter full name of the student.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="studentEmail">Email Address</label>
+        <input aria-describedby="studentEmailHelp" value="{{ data_dict['student_email'] if data_dict.get('student_email') }}" class="form-control" id="studentEmail" name="student_email" required
+               type="email">
+        <div class="form-text" id="studentEmailHelp">Enter email address of the student.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="instituteName">Institute Name</label>
+        <input aria-describedby="instituteNameHelp" value="{{ data_dict['institute_name'] if data_dict.get('institute_name') }}" class="form-control" id="instituteName" name="institute_name" required type="text">
+        <div class="form-text" id="instituteNameHelp">Enter name of the institute in which student is studying.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-control" value="{{ data_dict['password'] if data_dict.get('password') }}" id="password" name="password" required type="password">
+        <div class="form-text" id="passwordHelp">
+            Your password must be 8-20 characters long, contain letters and numbers, and must not contain
+            spaces,
+            special characters, or emoji.
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="confirmPassword">Confirm Password</label>
+        <input class="form-control" value="{{ data_dict['confirm_password'] if data_dict.get('confirm_password') }}" id="confirmPassword" name="confirm_password" required type="password">
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+
+</form>
+
+
+{% endblock %}
