@@ -8,26 +8,26 @@
 
     <div class="mb-3">
         <label class="form-label" for="mentorName">Full Name</label>
-        <input aria-describedby="mentorNameHelp" value="{{ data_dict['mentor_name'] if data_dict.get('mentor_name') }}" class="form-control" id="mentorName" name="mentor_name" required type="text">
+        <input aria-describedby="mentorNameHelp" class="form-control" id="mentorName" name="mentor_name" required type="text">
         <div class="form-text" id="mentorNameHelp">Enter full name of the mentor.</div>
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="mentorEmail">Email Address</label>
-        <input aria-describedby="mentorEmailHelp" value="{{ data_dict['mentor_email'] if data_dict.get('mentor_email') }}" class="form-control" id="mentorEmail" name="mentor_email" required
+        <input aria-describedby="mentorEmailHelp" class="form-control" id="mentorEmail" name="mentor_email" required
                type="email">
         <div class="form-text" id="mentorEmailHelp">Enter email address of the mentor.</div>
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="instituteName">Institute Name</label>
-        <input aria-describedby="instituteNameHelp" value="{{ data_dict['institute_name'] if data_dict.get('institute_name') }}" class="form-control" id="instituteName" name="institute_name" required type="text">
+        <input aria-describedby="instituteNameHelp" class="form-control" id="instituteName" name="institute_name" required type="text">
         <div class="form-text" id="instituteNameHelp">Enter name of the institute in which student is studying.</div>
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="password">Password</label>
-        <input class="form-control" value="{{ data_dict['password'] if data_dict.get('password') }}" id="password" name="password" required type="password">
+        <input class="form-control" id="password" name="password" required type="password">
         <div class="form-text" id="passwordHelp">
             Your password must be 8-20 characters long, contain letters and numbers, and must not contain
             spaces,
@@ -37,7 +37,7 @@
 
     <div class="mb-3">
         <label class="form-label" for="confirmPassword">Confirm Password</label>
-        <input class="form-control" value="{{ data_dict['confirm_password'] if data_dict.get('confirm_password') }}" id="confirmPassword" name="confirm_password" required type="password">
+        <input class="form-control" id="confirmPassword" name="confirm_password" required type="password">
     </div>
 
     <button class="btn btn-primary" type="submit">Submit</button>

@@ -13,13 +13,20 @@ class Student(db.Model):
     password = db.Column(db.String(255), nullable=False)
 
 
+team_mentor = db.Table('team_mentor',
+                    db.Column('mentor_id', db.Integer, db.ForeignKey('mentor.id')),
+                    db.Column('team_id', db.Integer, db.ForeignKey('team.id')),
+                )
+
+
 class Mentor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     institute = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
-    teams = db.relationship('Team', backref='mentors')
+
+    mentors = db.relationship('Team', secondary=team_mentor, backref='mentors')
 
 
 class Admin(db.Model):
@@ -30,7 +37,7 @@ class Admin(db.Model):
 
 
 team_member = db.Table('team_member',
-                    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+                    db.Column('student_id', db.Integer, db.ForeignKey('student.id')),
                     db.Column('team_id', db.Integer, db.ForeignKey('team.id')),
                 )
 
@@ -41,13 +48,12 @@ class Team(db.Model):
     name = db.Column(db.String(255), unique=True, nullable=False)
     institute = db.Column(db.String(255), nullable=False)
     leader_email = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
     create_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-    mentor = db.Column(db.Integer, db.ForeignKey('mentor.id'))
+    members = db.relationship('Student', secondary=team_member, backref='teams')
 
-    members = db.relationship('User', secondary=team_member, backref='members')
-
-    projects = db.relationship('Project', backref='projects')
+    projects = db.relationship('Project', backref='team')
 
 
 class Project(db.Model):
@@ -61,5 +67,5 @@ class Project(db.Model):
     ppt_link = db.Column(db.String(255))
     report_link = db.Column(db.String(255), nullable=False)
 
-    team = db.Column(db.Integer, db.ForeignKey('team.id'))
+    team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
 

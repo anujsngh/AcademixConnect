@@ -1,4 +1,5 @@
-# NDLP : National Digital Library of Projects. #
+# NDLP : National Digital Library of Projects. #  - 0
+# NPL : National Project's Library #
 
 
 # flask related dependencies :
@@ -12,6 +13,8 @@ app = Flask(__name__)
 
 
 # configuring app object
+app.config["ENV"] = 'development'
+
 if app.config["ENV"] == 'production':
     app.config.from_object('config.ProductionConfig')
 elif app.config["ENV"] == 'development':

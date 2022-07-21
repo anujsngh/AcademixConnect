@@ -8,34 +8,61 @@
 
     <div class="mb-3">
         <label class="form-label" for="teamName">Name of Team</label>
-        <input aria-describedby="teamNameHelp" value="{{ data_dict['team_name'] if data_dict.get('team_name') }}" class="form-control" id="teamName" name="team_name" required type="text">
+        <input aria-describedby="teamNameHelp" class="form-control" id="teamName" name="team_name" required type="text">
         <div class="form-text" id="teamNameHelp">Enter Name of Team.</div>
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="teamLeaderEmail">Email Address of Team Leader</label>
-        <input aria-describedby="teamLeaderEmailHelp" value="{{ data_dict['team_leader_email'] if data_dict.get('team_leader_email') }}" class="form-control" id="teamLeaderEmail" name="team_leader_email" required
+        <input aria-describedby="teamLeaderEmailHelp" class="form-control" id="teamLeaderEmail" name="team_leader_email" required
                type="email">
         <div class="form-text" id="teamLeaderEmailHelp">Enter Email Address of Team Leader.</div>
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="teamMember1Email">Email Address of Team Member 1</label>
-        <input aria-describedby="helpTeamMember1Email" value="{{ data_dict['team_mem1_email'] if data_dict.get('team_mem1_email') }}" class="form-control" id="teamMember1Email" name="team_mem1_email"
+        <input aria-describedby="helpTeamMember1Email" class="form-control" id="teamMember1Email" name="team_mem1_email"
                type="email">
         <div class="form-text" id="helpTeamMember1Email">Enter Email Address of Team Member 1.</div>
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="teamMember2Email">Email Address of Team Member 2</label>
-        <input aria-describedby="helpTeamMember2Email" value="{{ data_dict['team_mem2_email'] if data_dict.get('team_mem2_email') }}" class="form-control" id="teamMember2Email" name="team_mem2_email"
+        <input aria-describedby="helpTeamMember2Email" class="form-control" id="teamMember2Email" name="team_mem2_email"
                type="email">
         <div class="form-text" id="helpTeamMember2Email">Enter Email Address of Team Member 2.</div>
     </div>
 
     <div class="mb-3">
+        <label class="form-label" for="teamMember3Email">Email Address of Team Member 3</label>
+        <input aria-describedby="helpTeamMember3Email" class="form-control" id="teamMember3Email" name="team_mem3_email"
+               type="email">
+        <div class="form-text" id="helpTeamMember3Email">Enter Email Address of Team Member 3.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="teamMentor1Email">Email Address of Mentor 1</label>
+        <input aria-describedby="teamMentor1EmailHelp" class="form-control" id="teamMentor1Email" name="team_mentor1_email"
+               type="email">
+        <div class="form-text" id="teamMentor1EmailHelp">Enter Email Address of Mentor 1.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="teamMentor2Email">Email Address of Mentor 2</label>
+        <input aria-describedby="teamMentor2EmailHelp" class="form-control" id="teamMentor2Email" name="team_mentor2_email"
+               type="email">
+        <div class="form-text" id="teamMentor2EmailHelp">Enter Email Address of Mentor 2.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="teamInstitute">Name of team's institute</label>
+        <input aria-describedby="teamInstituteHelp" class="form-control" id="teamInstitute" name="team_institute" required type="text">
+        <div class="form-text" id="teamInstituteHelp">Enter Name of team's institute.</div>
+    </div>
+
+    <div class="mb-3">
         <label class="form-label" for="password">Password</label>
-        <input class="form-control" value="{{ data_dict['password'] if data_dict.get('password') }}" id="password" name="password" required type="password">
+        <input class="form-control" id="password" name="password" required type="password">
         <div class="form-text" id="passwordHelp">
             Your password must be 8-20 characters long, contain letters and numbers, and must not contain
             spaces,
@@ -45,7 +72,7 @@
 
     <div class="mb-3">
         <label class="form-label" for="confirmPassword">Confirm Password</label>
-        <input class="form-control" value="{{ data_dict['confirm_password'] if data_dict.get('confirm_password') }}" id="confirmPassword" name="confirm_password" required type="password">
+        <input class="form-control" id="confirmPassword" name="confirm_password" required type="password">
     </div>
 
     <div class="mb-3 form-check">
