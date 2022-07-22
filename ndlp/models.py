@@ -85,3 +85,5 @@ class Project(db.Model):
 
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
 
+    #todo: add is_approved and is_verified
+

@@ -95,6 +95,39 @@ def team_dashboard(team_uid):
     return render_template("team_dashboard.html", team_dict=team_dict)
 
 
+@app.route("/mentor/approve_project/<token>", methods=['GET', 'POST'])
+def mentor_approve_project(token):
+    mentor = Mentor.verify_mail_token(token)
+    team_uid = request.args.get('team_uid')
+    project_uid = request.args.get('project_uid')
+
+    team = Team.query.filter_by(uid=team_uid).first()
+    project = Project.query.filter_by(uid=project_uid).first()
+
+    if mentor is None:
+        flash('That is an Invalid or Expired Token', 'warning')
+        return redirect(url_for('home'))
+
+    if request.method == "GET":
+        return render_template("mentor_project_approve.html", team_dict=team, project_dict=project)
+
+    if request.method == "POST":
+        mentor_response = request.form.get('confirm_reject_btn')
+        if mentor_response == 'confirm':
+            send_ack_mail(email=team.leader_email, ack_info=f"Your project is verified by your mentor : {mentor.name}.")
+
+        return redirect(url_for('team_dashboard', team_uid=team_uid))
+
+
+def send_mentor_project_approve_mail(mentor_email, team_uid, team_name, project_uid):
+    mentor = Mentor.query.filter_by(email=mentor_email).first()
+    token = Mentor.get_mail_token(mentor)
+    msg = Message("Alert !!!",
+                  body=f"Approve or Reject this project, team uid : {team_uid}, team name : {team_name}, project uid : {project_uid}) ? \n Visit the following link: {url_for('mentor_approve_project', token=token, team_uid=[team_uid], project_uid=[project_uid], _external=True)}",
+                  recipients=[mentor_email])
+    mail.send(msg)
+
+
 @app.route("/team/<string:team_uid>/project_upload", methods=['GET', 'POST'])
 def project_upload(team_uid):
     if request.method == "GET":
@@ -133,6 +166,9 @@ def project_upload(team_uid):
             email=team.leader_email,
             ack_info=f"Your project uploaded successfully with project uid : {project_uid}."
         )
+
+        for mentor in team.mentors:
+            send_mentor_project_approve_mail(mentor_email=mentor.email, team_uid=team_uid, team_name=team.name, project_uid=project_uid)
 
         flash(message="Your project is uploaded successfully and after your mentor's verification it will be listed!", category="success")
         return redirect(url_for('team_dashboard', team_uid=team_uid))

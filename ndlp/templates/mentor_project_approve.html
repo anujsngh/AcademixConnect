@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form action="" method="post">
+    <h5>You are verifying this Team and Project : </h5>
+
+    <h6>Team Details : </h6>
+    <p>team uid : {{ team_dict.uid }}</p>
+    <p>team name : {{ team_dict.name }}</p>
+    <p>team's institute : {{ team_dict.institute }}</p>
+    <p>team's leader_email : {{ team_dict.leader_email }}</p>
+    <p>team's create_date : {{ team_dict.create_date }}</p>
+    <p>team's members : {{ team_dict.members }}</p>
+    <p>team's projects : {{ team_dict.projects }}</p>
+
+    <h6>Project Details : </h6>
+    <p>project uid : {{ project_dict.uid }}</p>
+    <p>project title : {{ project_dict.title }}</p>
+    <p>project description : {{ project_dict.description }}</p>
+    <p>project theme : {{ project_dict.theme }}</p>
+    <p>project category : {{ project_dict.category }}</p>
+    <p>project tech stack : {{ project_dict.tech_stack }}</p>
+    <p>project ppt link : {{ project_dict.ppt_link }}</p>
+    <p>project report link : {{ project_dict.report_link }}</p>
+
+    <button class="btn btn-primary m-3" name="confirm_reject_btn" type="submit" value="confirm">confirm</button>
+    <button class="btn btn-danger m-3" name="confirm_reject_btn" type="submit" value="reject">reject</button>
+</form>
+
+{% endblock %}
