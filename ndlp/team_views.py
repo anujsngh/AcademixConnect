@@ -1,7 +1,7 @@
 # package level dependencies :
 from ndlp import app, db, mail
-from ndlp.models import Student, Team, Mentor
-from ndlp.views_utils import encrypt_password, send_team_uid_mail, generate_uid
+from ndlp.models import Student, Team, Mentor, Project
+from ndlp.views_utils import encrypt_password, send_team_uid_mail, generate_uid, send_ack_mail
 
 # flask related dependencies :
 from flask import render_template, redirect, url_for, request, flash
@@ -23,7 +23,6 @@ def team_register():
         return render_template("team_register.html")
     elif request.method == "POST":
         team_uid = generate_uid()
-
         while Team.query.filter_by(uid=team_uid).first():
             team_uid = generate_uid()
 
@@ -96,10 +95,47 @@ def team_dashboard(team_uid):
     return render_template("team_dashboard.html", team_dict=team_dict)
 
 
-@app.route("/team/<string:team_uid>/project_upload")
+@app.route("/team/<string:team_uid>/project_upload", methods=['GET', 'POST'])
 def project_upload(team_uid):
     if request.method == "GET":
         return render_template("project_upload.html", team_uid=team_uid)
+
+    elif request.method == "POST":
+        team = Team.query.filter_by(uid=team_uid).first()
+        project_uid = generate_uid()
+        while Team.query.filter_by(uid=project_uid).first():
+            project_uid = generate_uid()
+
+        project_title = request.form.get("project_title")
+        project_description = request.form.get("project_title")
+        project_theme = request.form.get("project_theme")
+        project_category = request.form.get("project_category")
+        project_tech_stack = request.form.get("project_tech_stack")
+        project_ppt_link = request.form.get("project_ppt_link")
+        project_report_link = request.form.get("project_report_link")
+
+        project = Project(
+            uid=project_uid,
+            title=project_title,
+            description=project_description,
+            theme=project_theme,
+            category=project_category,
+            tech_stack=project_tech_stack,
+            ppt_link=project_ppt_link,
+            report_link=project_report_link,
+            team_id=team.id
+        )
+
+        db.session.add(project)
+        db.session.commit()
+
+        send_ack_mail(
+            email=team.leader_email,
+            ack_info=f"Your project uploaded successfully with project uid : {project_uid}."
+        )
+
+        flash(message="Your project is uploaded successfully and after your mentor's verification it will be listed!", category="success")
+        return redirect(url_for('team_dashboard', team_uid=team_uid))
 
 
 @app.route("/team/<string:team_uid>/project_details/<string:project_uid>")

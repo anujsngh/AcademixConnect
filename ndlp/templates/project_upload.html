@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Upload Project</h1>
-<h6><strong>Team ID :</strong> {{ team_id }}</h6>
+<h6><strong>Team UID :</strong> {{ team_uid }}</h6>
 
 <form action="" method="post">
 
@@ -13,14 +13,21 @@
     </div>
 
     <div class="mb-3">
+        <label class="form-label" for="project_description">Description</label>
+        <input aria-describedby="project_descriptionHelp" class="form-control"
+               id="project_description" name="project_description" required type="text">
+        <div class="form-text" id="project_descriptionHelp">Enter description of the project.</div>
+    </div>
+
+    <div class="mb-3">
         <label class="form-label" for="project_theme">Theme</label>
         <select aria-describedby="projectThemeHelp" aria-label="Default select example" class="form-select"
                 id="project_theme" name="project_theme">
-            <option selected>Blockchain</option>
-            <option value="1">Smart Education</option>
-            <option value="2">Agriculture</option>
-            <option value="3">Smart Automation</option>
-            <option value="4">Other</option>
+            <option selected value="blockchain">Blockchain</option>
+            <option value="smart_education">Smart Education</option>
+            <option value="agriculture">Agriculture</option>
+            <option value="smart_automation">Smart Automation</option>
+            <option value="other">Other</option>
         </select>
         <div class="form-text" id="projectThemeHelp">Select theme of the project.</div>
     </div>
@@ -29,11 +36,8 @@
         <label class="form-label" for="project_category">Category</label>
         <select aria-describedby="projectCategoryHelp" aria-label="Default select example" class="form-select"
                 id="project_category" name="project_category">
-            <option selected>Blockchain</option>
-            <option value="1">Smart Education</option>
-            <option value="2">Agriculture</option>
-            <option value="3">Smart Automation</option>
-            <option value="4">Other</option>
+            <option selected value="software">Software</option>
+            <option value="hardware">Hardware</option>
         </select>
         <div class="form-text" id="projectCategoryHelp">Select category of the project.</div>
     </div>
@@ -42,7 +46,7 @@
         <label class="form-label" for="project_tech_stack">Tech Stack</label>
         <input aria-describedby="projectTechStackHelp" class="form-control"
                id="project_tech_stack" name="project_tech_stack" required type="text">
-        <div class="form-text" id="projectTechStackHelp">Enter tech stack of the project separated by comma.</div>
+        <div class="form-text" id="projectTechStackHelp">Enter technologies used in the project separated by comma.</div>
     </div>
 
     <div class="mb-3">
