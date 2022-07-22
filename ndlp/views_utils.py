@@ -30,6 +30,11 @@ def encrypt_password(password):
     return h.hexdigest()
 
 
+def send_ack_mail(email, ack_info):
+    msg = Message("Acknowledgement", body=ack_info, recipients=[email])
+    mail.send(msg)
+
+
 def send_team_uid_mail(team_uid, team_leader_email):
     msg = Message(f"Your Team Id : {team_uid}. Use it to login with your password.", recipients=[team_leader_email])
     mail.send(msg)

@@ -1,5 +1,8 @@
+# flask related dependencies :
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
 # package level dependencies :
-from ndlp import db
+from ndlp import db, app
 
 # other dependencies :
 import datetime
@@ -15,7 +18,7 @@ class Student(db.Model):
 
 team_mentor = db.Table('team_mentor',
                     db.Column('mentor_id', db.Integer, db.ForeignKey('mentor.id')),
-                    db.Column('team_id', db.Integer, db.ForeignKey('team.id')),
+                    db.Column('team_id', db.Integer, db.ForeignKey('team.id'))
                 )
 
 
@@ -26,7 +29,20 @@ class Mentor(db.Model):
     institute = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
 
-    mentors = db.relationship('Team', secondary=team_mentor, backref='mentors')
+    teams = db.relationship('Team', secondary=team_mentor, backref='mentors')
+
+    def get_mail_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'mentor_id': self.id}).decode('utf-8')
+
+
+    def verify_mail_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            mentor_id = s.loads(token)['mentor_id']
+        except:
+            return None
+        return Mentor.query.get(mentor_id)
 
 
 class Admin(db.Model):

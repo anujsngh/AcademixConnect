@@ -1,11 +1,46 @@
 # package level dependencies :
-from ndlp import app, db
+from ndlp import app, db, mail
 from ndlp.models import Team, Mentor
-from ndlp.views_utils import encrypt_password, send_register_confirm_mail
+from ndlp.views_utils import encrypt_password, send_register_confirm_mail, send_ack_mail
 
 
 # flask related dependencies :
 from flask import render_template, redirect, url_for, request, flash
+from flask_mail import Message
+
+
+@app.route("/mentor/<mentor_email>/dashboard")
+def mentor_dashboard(mentor_email):
+    return render_template("mentor_dashboard.html")
+
+
+@app.route("/mentor/confirm/<token>", methods=['GET', 'POST'])
+def mentor_confirm(token):
+    mentor = Mentor.verify_mail_token(token)
+    team_uid = request.args.get('team_uid')
+    if mentor is None:
+        flash('That is an Invalid or Expired Token', 'warning')
+        return redirect(url_for('home'))
+
+    if request.method == "GET":
+        team = Team.query.filter_by(uid=team_uid).first()
+        team_dict = {
+            'team_uid': team_uid,
+            'team_name': team.name
+        }
+        return render_template("mentor_confirm.html", team_dict=team_dict)
+
+    if request.method == "POST":
+        mentor_response = request.form.get('confirm_reject_btn')
+        if mentor_response == 'confirm':
+            team = Team.query.filter_by(uid=team_uid).first()
+            mentor.teams.append(team)
+
+            db.session.commit()
+
+            send_ack_mail(email=team.leader_email, ack_info=f"You are verified by your mentor : {mentor.name}.")
+
+        return redirect(url_for('mentor_dashboard', mentor_email=mentor.email))
 
 
 @app.route("/register/mentor", methods=['GET', 'POST'])
