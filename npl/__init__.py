@@ -31,10 +31,10 @@ db = SQLAlchemy(app)
 mail = Mail(app)
 
 
-from ndlp import models
+from npl import models
 
-from ndlp import views
-from ndlp import student_views
-from ndlp import mentor_views
-from ndlp import team_views
-from ndlp import project_views
+from npl import views
+from npl import student_views
+from npl import mentor_views
+from npl import team_views
+from npl import project_views

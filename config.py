@@ -24,9 +24,9 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # configuration of mail
-    MAIL_DEFAULT_SENDER = 'testmail20210101@gmail.com'
-    MAIL_USERNAME = 'testmail20210101@gmail.com'
-    MAIL_PASSWORD = 'sbxnibunkcmmcohn'
+    MAIL_DEFAULT_SENDER = 'national.projects.library@gmail.com'
+    MAIL_USERNAME = 'national.projects.library@gmail.com'
+    MAIL_PASSWORD = 'butndqvnuzfjongw'
 
 
 class TestingConfig(BaseConfig):

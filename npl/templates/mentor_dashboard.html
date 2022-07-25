@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>Mentor Dashboard</h1>
+
+    <p><strong>Name : </strong>{{ mentor.name }}</p>
+    <p><strong>Email : </strong>{{ mentor.email }}</p>
+    <p><strong>Institute : </strong>{{ mentor.institute }}</p>
+    <br>
+    <p><strong>Teams Mentoring : </strong></p>
+    {% for team in mentor.teams %}
+        <ul>
+            <li >
+                <a href="{{ url_for('team_dashboard', team_uid=team.uid) }}">Team#{{ team.uid }}</a>
+                <ul>
+                    <li>Team Name : {{ team.name }}</li>
+                    <li>Team Institute : {{ team.institute }}</li>
+                    <li>Team Leader Email : {{ team.leader_email }}</li>
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+
+    <br>
+    <p><strong>Projects Mentoring :</strong></p>
+    {% for team in mentor.teams %}
+    {% for project in team.projects %}
+        <ul>
+            <li >
+                <a href="{{ url_for('project_dashboard', project_uid=project.uid) }}">Project#{{ project.uid }}</a>
+                <ul>
+                    <li>Project title : {{ project.title }}</li>
+                    <li>Project description : {{ project.description }}</li>
+                    <li>Project Type : {{ project.type }}</li>
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+    {% endfor %}
+
+{% endblock %}

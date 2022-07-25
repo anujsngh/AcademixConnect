@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="post">
+    <h5>You are verifying that you are mentor of this team</h5>
+    <br>
+    <p><strong>Team UID :</strong> <a href="{{ url_for('team_dashboard', team_uid=team.uid) }}">{{ team.uid }}</a></p>
+    <p><strong>Team Name :</strong> {{ team.name }}</p>
+    <p><strong>Team Leader Email :</strong> {{ team.leader_email}}</p>
+    <p><strong>Team's Institute :</strong> {{ team.institute }}</p>
+    <p><strong>Team Creation Date :</strong> {{ team.create_date }}</p>
+
+    <br>
+    <p><strong>Team Members :</strong></p>
+    {% for student in team.members %}
+        <ul>
+            <li >
+                <a href="{{ url_for('student_dashboard', student_email=student.email) }}">Member#{{ student.email }}</a>
+                <ul>
+                    <li>Member Name : {{ student.name }}</li>
+                    <li>Member Institute : {{ student.institute }}</li>
+                    <li>Member Email : {{ student.email }}</li>
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+
+    <button class="btn btn-primary m-3" name="approve_reject_btn" type="submit" value="approve">approve</button>
+    <button class="btn btn-danger m-3" name="approve_reject_btn" type="submit" value="reject">reject</button>
+</form>
+{% endblock %}
+
+

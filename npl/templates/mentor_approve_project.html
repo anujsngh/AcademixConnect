@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form action="" method="post">
+    <h5>You are verifying this Team and Project : </h5>
+    <br>
+    <h6><strong>Team Details : </strong></h6>
+    <p><strong>Team UID :</strong> {{ team.uid }}</p>
+    <p><strong>Team Name :</strong> {{ team.name }}</p>
+    <p><strong>Team Leader Email :</strong> {{ team.leader_email}}</p>
+    <p><strong>Team's Institute :</strong> {{ team.institute }}</p>
+    <p><strong>Team Creation Date :</strong> {{ team.create_date }}</p>
+    <p><strong>Team Members :</strong></p>
+    {% for student in team.members %}
+        <ul>
+            <li >
+                <a href="{{ url_for('student_dashboard', student_email=student.email) }}">Member#{{ student.email }}</a>
+                <ul>
+                    <li>Member Name : {{ student.name }}</li>
+                    <li>Member Institute : {{ student.institute }}</li>
+                    <li>Member Email : {{ student.email }}</li>
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+
+    <br>
+
+    <h6><strong>Project Details : </strong></h6>
+    <p><strong>Project UID : </strong><a href="{{ url_for('project_dashboard', project_uid=project.uid) }}">{{ project.uid }}</a></p>
+    <p><strong>Project Title : </strong>{{ project.title }}</p>
+    <p><strong>Type : </strong>{{ project.type }}</p>
+    <p><strong>Theme : </strong>{{ project.theme }}</p>
+    <p><strong>Category : </strong>{{ project.category }}</p>
+    <p><strong>Tech Stack : </strong>{{ project.tech_stack }}</p>
+    <p><a href="{{ project.ppt_link }}">Project PPT</a></p>
+    <p><a href="{{ project.report_link }}">Project Report</a></p>
+    <br>
+    <p><strong>Team Mentors :</strong></p>
+    {% for mentor in team.mentors %}
+        <ul>
+            <li >
+                <a href="{{ url_for('mentor_dashboard', mentor_email=mentor.email) }}">Mentor#{{ mentor.email }}</a>
+                <ul>
+                    <li>Mentor Name : {{ mentor.name }}</li>
+                    <li>Mentor Institute : {{ mentor.institute }}</li>
+                    <li>Mentor Email : {{ mentor.email }}</li>
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+
+    <button class="btn btn-primary m-3" name="approve_reject_btn" type="submit" value="approve">approve</button>
+    <button class="btn btn-danger m-3" name="approve_reject_btn" type="submit" value="reject">reject</button>
+</form>
+
+{% endblock %}

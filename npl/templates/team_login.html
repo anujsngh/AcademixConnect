@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Login Page</h2>
+<h2>Team Login Page</h2>
 
 
 <form method="post" action="">
     <div class="mb-3">
-        <label class="form-label" for="exampleInputEmail1">Email</label>
-        <input aria-describedby="emailHelp" class="form-control" id="exampleInputEmail1" name="student_email" type="text">
-        <div class="form-text" id="emailHelp">Enter registered email address.</div>
+        <label class="form-label" for="exampleInputEmail1">Team ID</label>
+        <input aria-describedby="emailHelp" class="form-control" id="exampleInputEmail1" name="team_uid" type="text">
+        <div class="form-text" id="emailHelp">Enter Team ID Received on Team Leader's Email Address.</div>
     </div>
     <div class="mb-3">
         <label class="form-label" for="exampleInputPassword1">Password</label>
         <input class="form-control" id="exampleInputPassword1" name="password" type="password">
         <div class="form-text" id="passwordHelpBlock">
-            Enter password chosen at the time of registration.
+            Enter Password Chosen at the Time of Registration.
         </div>
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>

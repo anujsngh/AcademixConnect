@@ -1,4 +1,4 @@
-from ndlp import app
+from npl import app
 
 
 if __name__ == "__main__":

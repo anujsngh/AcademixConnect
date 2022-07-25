@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+
 <h1>Upload Project</h1>
 <h6><strong>Team UID :</strong> {{ team_uid }}</h6>
 
@@ -17,6 +18,16 @@
         <input aria-describedby="project_descriptionHelp" class="form-control"
                id="project_description" name="project_description" required type="text">
         <div class="form-text" id="project_descriptionHelp">Enter description of the project.</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="project_type">Type</label>
+        <select aria-describedby="projectTypeHelp" aria-label="Default select example" class="form-select"
+                id="project_type" name="project_type">
+            <option selected value="Major">Major</option>
+            <option value="Minor">Minor</option>
+        </select>
+        <div class="form-text" id="projectTypeHelp">Select type of the project.</div>
     </div>
 
     <div class="mb-3">

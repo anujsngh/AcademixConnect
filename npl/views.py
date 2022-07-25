@@ -1,7 +1,7 @@
 # package level dependencies :
-from ndlp import app, db
-from ndlp.models import Team, Student, Mentor
-from ndlp.views_utils import encrypt_password, send_team_uid_mail, generate_random_int
+from npl import app, db
+from npl.models import Team, Student, Mentor, Project
+from npl.views_utils import encrypt_password, generate_random_int
 
 # flask related dependencies :
 from flask import render_template, redirect, url_for, request
@@ -13,7 +13,8 @@ from flask import render_template, redirect, url_for, request
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("home.html")
+    projects = Project.query.all()
+    return render_template("home.html", projects=projects)
 
 
 @app.route("/login", methods=['GET', 'POST'])

@@ -1,11 +1,18 @@
 # package level dependencies :
-from ndlp import app, db
-from ndlp.models import Team, Student
-from ndlp.views_utils import encrypt_password, send_register_confirm_mail
+from npl import app, db
+from npl.models import Team, Student
+from npl.views_utils import encrypt_password, send_ack_mail
 
 
 # flask related dependencies :
 from flask import render_template, redirect, url_for, request, flash
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
+@app.route("/student/<student_email>/dashboard")
+def student_dashboard(student_email):
+    student = Student.query.filter_by(email=student_email).first()
+    return render_template("student_dashboard.html", student=student)
 
 
 @app.route("/register/student", methods=['GET', 'POST'])
@@ -25,17 +32,14 @@ def student_register():
             return redirect(url_for('student_register'))
 
         if password == confirm_password:
-            enc_password = encrypt_password(password)
+            Student.add_student(
+                student_name=student_name,
+                student_email=student_email,
+                institute_name=institute_name,
+                password=password,
+            )
 
-            student = Student(name=student_name,
-                            email=student_email,
-                            institute=institute_name,
-                            password=enc_password,
-                        )
-
-            db.session.add(student)
-            db.session.commit()
-            send_register_confirm_mail(student_email)
+            send_ack_mail(email=student_email, ack_info="You are successfully registered. You can login with your registered username and password.")
             flash(message="You are registered successfully, check your email for confirmation!", category="success")
             return redirect(url_for('home'))
         else:
@@ -50,7 +54,12 @@ def student_login():
     elif request.method == "POST":
         student_email = request.form.get("student_email")
         password = request.form.get("password")
-        enc_password = encrypt_password(password)
-        if enc_password == Student.query.filter_by(email=student_email).first().password:
+
+        student = Student.query.filter_by(email=student_email).first()
+
+        if student and check_password_hash(student.password, password):
             flash(message='Login Success!', category='success')
-            return redirect(url_for('home'))
+            return redirect(url_for('student_dashboard', student_email=student_email))
+
+        flash('Please check your login details and try again.')
+        return redirect(url_for('student_login'))
