@@ -1,5 +1,6 @@
 # MinorProject
 
+<h6>initial db setup from python console</h6>
 <p>from npl import db<p>
 <p>from npl.models import Student, Mentor, Team, Project<p>
 <p>db.create_all()<p>
