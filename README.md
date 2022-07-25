@@ -1,4 +1,9 @@
 # MinorProject
+
+from npl import db
+from nple.models import Student, Mentor, Team, Project
+db.create_all()
+
 ![Screenshot (495)](https://user-images.githubusercontent.com/62144435/180678959-d644d092-f882-4b63-a4d8-e3aad751b8ee.png)
 ![Screenshot (490)](https://user-images.githubusercontent.com/62144435/180609246-43790090-d93b-40de-b5cd-9afc9fcf2356.png)
 ![Screenshot (491)](https://user-images.githubusercontent.com/62144435/180609250-73d57ac6-71b4-4ce7-8871-3f5f44d58e43.png)
