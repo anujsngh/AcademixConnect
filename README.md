@@ -1,4 +1,5 @@
 # MinorProject
+![Screenshot (495)](https://user-images.githubusercontent.com/62144435/180678959-d644d092-f882-4b63-a4d8-e3aad751b8ee.png)
 ![Screenshot (490)](https://user-images.githubusercontent.com/62144435/180609246-43790090-d93b-40de-b5cd-9afc9fcf2356.png)
 ![Screenshot (491)](https://user-images.githubusercontent.com/62144435/180609250-73d57ac6-71b4-4ce7-8871-3f5f44d58e43.png)
 ![Screenshot (475)](https://user-images.githubusercontent.com/62144435/180609251-57c1217a-6134-45f0-b19f-6ac887da6437.png)
@@ -16,3 +17,4 @@
 ![Screenshot (487)](https://user-images.githubusercontent.com/62144435/180609276-4f9decdb-fa40-42f4-ab24-151e48cb0843.png)
 ![Screenshot (488)](https://user-images.githubusercontent.com/62144435/180609280-938385d2-374f-40e8-be70-16319c9e1312.png)
 ![Screenshot (489)](https://user-images.githubusercontent.com/62144435/180609283-efecada2-20b2-4d1e-862b-0a830923e193.png)
+
