@@ -103,40 +103,44 @@ class Team(db.Model):
     password = db.Column(db.String(255), nullable=False)
     create_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     is_approved = db.Column(db.Integer, default=0)
+    mentor_count = db.Column(db.Integer, nullable=False)
 
     members = db.relationship('Student', secondary=team_member, backref='teams')
 
     projects = db.relationship('Project', backref='team')
 
     @staticmethod
-    def add_team(team_uid, team_name, team_institute, team_leader_email, password, team_mem1_email, team_mem2_email, team_mem3_email):
+    def add_team(team_uid, team_name, team_institute, team_leader_email, password, team_mem1_email, team_mem2_email, team_mem3_email, mentor_count):
 
-        team_mem1 = Student.query.filter_by(email=team_mem1_email).first()
-        if not team_mem1:
-            Student.add_student(
-                student_name="default",
-                student_email=team_mem1_email,
-                institute_name="default",
-                password="default"
-            )
+        if team_mem1_email:
+            team_mem1 = Student.query.filter_by(email=team_mem1_email).first()
+            if not team_mem1:
+                Student.add_student(
+                    student_name="default",
+                    student_email=team_mem1_email,
+                    institute_name="default",
+                    password="default"
+                )
 
-        team_mem2 = Student.query.filter_by(email=team_mem2_email).first()
-        if not team_mem2:
-            Student.add_student(
-                student_name="default",
-                student_email=team_mem2_email,
-                institute_name="default",
-                password="default"
-            )
+        if team_mem2_email:
+            team_mem2 = Student.query.filter_by(email=team_mem2_email).first()
+            if not team_mem2:
+                Student.add_student(
+                    student_name="default",
+                    student_email=team_mem2_email,
+                    institute_name="default",
+                    password="default"
+                )
 
-        team_mem3 = Student.query.filter_by(email=team_mem3_email).first()
-        if not team_mem3:
-            Student.add_student(
-                student_name="default",
-                student_email=team_mem3_email,
-                institute_name="default",
-                password="default"
-            )
+        if team_mem3_email:
+            team_mem3 = Student.query.filter_by(email=team_mem3_email).first()
+            if not team_mem3:
+                Student.add_student(
+                    student_name="default",
+                    student_email=team_mem3_email,
+                    institute_name="default",
+                    password="default"
+                )
 
         team = Team(
             uid=team_uid,
@@ -144,11 +148,17 @@ class Team(db.Model):
             institute=team_institute,
             leader_email=team_leader_email,
             password=generate_password_hash(password, "sha256"),
+            mentor_count=mentor_count
         )
 
-        team.members.append(team_mem1)
-        team.members.append(team_mem2)
-        team.members.append(team_mem3)
+        team_leader = Student.query.filter_by(email=team_leader_email).first()
+        team.members.append(team_leader)
+        if team_mem1_email:
+            team.members.append(team_mem1)
+        if team_mem2_email:
+            team.members.append(team_mem2)
+        if team_mem3_email:
+            team.members.append(team_mem3)
 
         db.session.add(team)
         db.session.commit()

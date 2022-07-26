@@ -4,7 +4,7 @@
 <h1>Home Page</h1>
 <br>
 {% for project in projects %}
-{% if project.is_approved %}
+{% if project.is_approved == project.team.mentor_count %}
 <div class="card text-center w-50">
     <div class="card-header">
         <a href="{{ url_for('project_dashboard', project_uid=project.uid) }}">Project#{{ project.uid }}</a>

@@ -32,7 +32,6 @@ def mentor_approve_team(token):
         if mentor_response == 'approve':
             team = Team.query.filter_by(uid=team_uid).first()
             mentor.teams.append(team)
-
             db.session.commit()
 
             send_ack_mail(email=team.leader_email, ack_info=f"You are verified by your mentor : {mentor.name}.")
@@ -59,6 +58,8 @@ def mentor_approve_project(token):
     if request.method == "POST":
         mentor_response = request.form.get('approve_reject_btn')
         if mentor_response == 'approve':
+            project.is_approved += 1
+            db.session.commit()
             send_ack_mail(email=team.leader_email, ack_info=f"Your project is verified by your mentor : {mentor.name}.")
 
         return redirect(url_for('mentor_dashboard', mentor_email=mentor.email))
