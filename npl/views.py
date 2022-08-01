@@ -13,8 +13,11 @@ from flask import render_template, redirect, url_for, request
 @app.route("/")
 @app.route("/home")
 def home():
-    projects = Project.query.all()
-    return render_template("home.html", projects=projects)
+    try:
+        projects = Project.query.all()
+        return render_template("home.html", projects=projects)
+    except:
+        return redirect(url_for('register'))
 
 
 @app.route("/login", methods=['GET', 'POST'])

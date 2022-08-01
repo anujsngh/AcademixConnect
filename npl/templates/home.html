@@ -5,30 +5,35 @@
 <br>
 {% for project in projects %}
 {% if project.is_approved == project.team.mentor_count %}
-<div class="card text-center w-50">
-    <div class="card-header">
-        <a href="{{ url_for('project_dashboard', project_uid=project.uid) }}">Project#{{ project.uid }}</a>
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">{{ project.title }}</h5>
-        <p class="card-text">{{ project.description }}</p>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item"><strong>Type : </strong>{{ project.type }}</li>
-        <li class="list-group-item"><strong>Theme : </strong>{{ project.theme }}</li>
-        <li class="list-group-item"><strong>Category : </strong>{{ project.category }}</li>
-        <li class="list-group-item"><strong>Tech Stack : </strong>{{ project.tech_stack }}</li>
-    </ul>
-    <div class="card-body">
-        <a class="card-link" href="{{ project.ppt_link }}">Project PPT</a>
-        <a class="card-link" href="{{ project.report_link }}">Project Report</a>
-    </div>
-    <div class="card-footer text-muted">
-        <p><strong>Team Name : </strong><a href="{{ url_for('team_dashboard', team_uid=project.team.uid) }}">{{ project.team.name }}</a></p>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card text-center">
+            <div class="card-header">
+                <a href="{{ url_for('project_dashboard', project_uid=project.uid) }}">Project#{{ project.uid }}</a>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ project.title }}</h5>
+                <p class="card-text">{{ project.description }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Type : </strong>{{ project.type }}</li>
+                <li class="list-group-item"><strong>Theme : </strong>{{ project.theme }}</li>
+                <li class="list-group-item"><strong>Category : </strong>{{ project.category }}</li>
+                <li class="list-group-item"><strong>Tech Stack : </strong>{{ project.tech_stack }}</li>
+            </ul>
+            <div class="card-body">
+                <a class="card-link" href="{{ project.ppt_link }}">Project PPT</a>
+                <a class="card-link" href="{{ project.report_link }}">Project Report</a>
+            </div>
+            <div class="card-footer text-muted">
+                <p><strong>Team Name : </strong><a href="{{ url_for('team_dashboard', team_uid=project.team.uid) }}">{{
+                    project.team.name }}</a></p>
+            </div>
+        </div>
+        <br>
+        <br>
     </div>
 </div>
-<br>
-<br>
 {% endif %}
 {% endfor %}
 

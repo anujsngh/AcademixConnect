@@ -19,17 +19,19 @@ def mentor_dashboard(mentor_email):
 def mentor_approve_team(token):
     mentor = Mentor.verify_mail_token(token)
     team_uid = request.args.get('team_uid')
+    team = Team.query.filter_by(uid=team_uid).first()
+
     if mentor is None:
         flash('That is an Invalid or Expired Token', 'warning')
         return redirect(url_for('home'))
 
     if request.method == "GET":
-        team = Team.query.filter_by(uid=team_uid).first()
         return render_template("mentor_approve_team.html", team=team)
 
     if request.method == "POST":
         mentor_response = request.form.get('approve_reject_btn')
         if mentor_response == 'approve':
+            team.is_approved += 1
             team = Team.query.filter_by(uid=team_uid).first()
             mentor.teams.append(team)
             db.session.commit()
