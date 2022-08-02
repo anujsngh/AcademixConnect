@@ -1,6 +1,8 @@
 # flask related dependencies :
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash
+from flask_login import UserMixin
+
 
 # package level dependencies :
 from npl import db, app
@@ -9,7 +11,7 @@ from npl import db, app
 import datetime
 
 
-class Student(db.Model):
+class Student(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
