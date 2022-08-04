@@ -122,6 +122,8 @@ def project_upload(team_uid):
         project_tech_stack = request.form.get("project_tech_stack")
         project_ppt_link = request.form.get("project_ppt_link")
         project_report_link = request.form.get("project_report_link")
+        project_youtube_link = request.form.get("project_youtube_link")
+        project_demo_link = request.form.get("project_demo_link")
 
         Project.add_project(
             project_uid=project_uid,
@@ -133,6 +135,8 @@ def project_upload(team_uid):
             project_tech_stack=project_tech_stack,
             project_ppt_link=project_ppt_link,
             project_report_link=project_report_link,
+            project_youtube_link=project_youtube_link,
+            project_demo_link=project_demo_link,
             team_id=team.id
         )
 

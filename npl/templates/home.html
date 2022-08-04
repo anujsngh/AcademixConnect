@@ -2,7 +2,7 @@
 {% block content %}
 
 
-<section class="total-project bg-light">
+<section class="total-project bg-light p-3 mb-3">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -32,7 +32,7 @@
 </section>
 
 
-<section class="prob-statement-panel">
+<section class="prob-statement-panel bg-light p-3 mb-3">
     <div class="container">
         <div class="row catBox">
             <div class="col-md-4">
@@ -57,6 +57,7 @@
                         <option value="MTM=">Transportation & Logistics</option>
                         <option value="MTQ=">Disaster Management</option>
                         <option value="MTU=">Smart Education</option>
+                        <option value="MTU=">Other</option>
                     </select>
                 </div>
             </div>
@@ -69,6 +70,8 @@
                         <option selected value="QWxs">All</option>
                         <option value="U29mdHdhcmU=">Software</option>
                         <option value="SGFyZHdhcmU=">Hardware</option>
+                        <option value="SGFyZHdhcmU=">Mixed</option>
+                        <option value="SGFyZHdhcmU=">Other</option>
                     </select>
                 </div>
             </div>
@@ -309,7 +312,7 @@
 <div class="table-responsive">
     <table class="table table-bordered table-hover caption-top align-middle" id="dataTablePS" style="width:100%">
         <caption>List of Projects</caption>
-        <thead class="table-group-divider table-dark">
+        <thead class="table-group-divider table-secondary">
         <tr>
             <th>S.No.</th>
             <th>Project's UID</th>
@@ -325,6 +328,7 @@
 
         <tbody class="table-group-divider">
 
+        {% if projects %}
         {% for project in projects %}
         {% if project.is_approved == project.team.mentor_count %}
         <tr>
@@ -433,10 +437,11 @@
 
     {% endif %}
     {% endfor %}
+    {% endif %}
 
         </tbody>
 
-        <tfoot class="table-group-divider table-dark">
+        <tfoot class="table-group-divider table-light">
         <tr>
             <th>S.No.</th>
             <th>Project's UID</th>
@@ -455,5 +460,5 @@
 </div>
 
 
-
+</div>
     {% endblock %}

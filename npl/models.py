@@ -190,12 +190,14 @@ class Project(db.Model):
     tech_stack = db.Column(db.String(255))
     ppt_link = db.Column(db.String(255))
     report_link = db.Column(db.String(255), nullable=False)
+    youtube_link = db.Column(db.String(255))
+    demo_link = db.Column(db.String(255))
     is_approved = db.Column(db.Integer, default=0)
 
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))  # foreign key
 
     @staticmethod
-    def add_project(project_uid, project_title, project_description, project_type, project_theme, project_category, project_tech_stack, project_ppt_link, project_report_link, team_id):
+    def add_project(project_uid, project_title, project_description, project_type, project_theme, project_category, project_tech_stack, project_ppt_link, project_report_link, project_youtube_link, project_demo_link, team_id):
         project = Project(
             uid=project_uid,
             title=project_title,
@@ -206,6 +208,8 @@ class Project(db.Model):
             tech_stack=project_tech_stack,
             ppt_link=project_ppt_link,
             report_link=project_report_link,
+            youtube_link=project_youtube_link,
+            demo_link=project_demo_link,
             team_id=team_id
         )
 
