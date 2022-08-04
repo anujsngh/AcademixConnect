@@ -1,3 +1,8 @@
+# flask related dependencies :
+from flask_login import logout_user, login_required
+from flask import flash
+
+
 # package level dependencies :
 from npl import app, db
 from npl.models import Team, Student, Mentor, Project
@@ -15,7 +20,9 @@ from flask import render_template, redirect, url_for, request
 def home():
     try:
         projects = Project.query.all()
-        return render_template("home.html", projects=projects)
+        num_hard_projs = Project.query.filter_by(category='Hardware').count()
+        num_soft_projs = Project.query.filter_by(category='Software').count()
+        return render_template("home.html", num_hard_projs=num_hard_projs, num_soft_projs=num_soft_projs, projects=projects)
     except:
         return redirect(url_for('register'))
 
@@ -32,6 +39,14 @@ def login():
             return redirect(url_for('mentor_login'))
         elif user_type == 'team':
             return redirect(url_for('team_login'))
+
+
+@app.route("/logout", methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    flash("You are Logged Out!", category="danger")
+    return redirect(url_for('login'))
 
 
 @app.route("/register", methods=['GET', 'POST'])

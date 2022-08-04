@@ -7,8 +7,18 @@ from flask_login import UserMixin
 # package level dependencies :
 from npl import db, app
 
+
 # other dependencies :
 import datetime
+
+
+
+class Theme:
+    pass
+
+
+class Institute:
+    pass
 
 
 class Student(db.Model, UserMixin):

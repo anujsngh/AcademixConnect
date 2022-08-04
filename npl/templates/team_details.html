@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
 
-</body>
-</html>
+    <h1>Team Details</h1>
+
+    <p><strong>Team UID :</strong> {{ team.uid }}</p>
+    <p><strong>Team Name :</strong> {{ team.name }}</p>
+    <p><strong>Team Leader Email :</strong> {{ team.leader_email}}</p>
+    <p><strong>Team's Institute :</strong> {{ team.institute }}</p>
+    <p><strong>Team Creation Date :</strong> {{ team.create_date }}</p>
+    <br>
+    <p><strong>Team Mentor :</strong></p>
+    {% for mentor in team.mentors %}
+        <ul>
+            <li >
+                <a href="{{ url_for('mentor_dashboard', mentor_email=mentor.email) }}">Mentor#{{ mentor.email }}</a>
+                <ul>
+                    <li>Mentor Name : {{ mentor.name }}</li>
+                    <li>Mentor Institute : {{ mentor.institute }}</li>
+                    <li>Mentor Email : {{ mentor.email }}</li>
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+    <br>
+    <p><strong>Team Members :</strong></p>
+    {% for student in team.members %}
+        <ul>
+            <li >
+                <a href="{{ url_for('student_dashboard', student_email=student.email) }}">Member#{{ student.email }}</a>
+                <ul>
+                    <li>Member Name : {{ student.name }}</li>
+                    <li>Member Institute : {{ student.institute }}</li>
+                    <li>Member Email : {{ student.email }}</li>
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+    <br>
+    <p><strong>Team Projects :</strong></p>
+    {% for project in team.projects %}
+        <ul>
+            <li >
+                <a href="{{ url_for('project_dashboard', project_uid=project.uid) }}">Project#{{ project.uid }}</a>
+                <ul>
+                    <li>Project title : {{ project.title }}</li>
+                    <li>Project description : {{ project.description }}</li>
+                    <li>Project Type : {{ project.type }}</li>
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+    <br>
+    {% if team.is_approved == team.mentor_count %}
+        <a type="button" class="btn btn-primary" href="{{ url_for('project_upload', team_uid=team.uid) }}">Upload New Project</a>
+    {% endif %}
+{% endblock %}
