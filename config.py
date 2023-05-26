@@ -3,7 +3,7 @@ class BaseConfig(object):
     TESTING = False
 
     # configuring secret key
-    SECRET_KEY = '479366fd70548d7cdc02ac54f4eb8943c2e5b7176f09438e08155b355dcad51e'
+    SECRET_KEY = 'put a random alphanumeric string here'
 
     # configuration of mail
     MAIL_SERVER = 'smtp.gmail.com'
@@ -24,9 +24,9 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # configuration of mail
-    MAIL_DEFAULT_SENDER = 'national.projects.library@gmail.com'
-    MAIL_USERNAME = 'national.projects.library@gmail.com'
-    MAIL_PASSWORD = 'butndqvnuzfjongw'
+    MAIL_DEFAULT_SENDER = 'some email address here'
+    MAIL_USERNAME = 'some email address here'
+    MAIL_PASSWORD = 'password of mail here'
 
 
 class TestingConfig(BaseConfig):
