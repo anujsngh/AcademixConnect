@@ -12,7 +12,7 @@ Flow of a project submission on the platform:
 6) It will be easier for students to showcase their projects to recruiters, when they will apply for recruitment.
 
 
-Team Members :
+<h4>Team Members :</h4>
 
 Anupam Pandey [Github : https://github.com/Anupam199949]
 
