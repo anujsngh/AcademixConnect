@@ -51,6 +51,7 @@
         </ul>
     {% endfor %}
     <br>
-    <a type="button" class="btn btn-primary" href="{{ url_for('project_upload', team_uid=team.uid) }}">Upload New Project</a>
-
+    {% if team.is_approved == team.mentor_count %}
+        <a type="button" class="btn btn-primary" href="{{ url_for('project_upload', team_uid=team.uid) }}">Upload New Project</a>
+    {% endif %}
 {% endblock %}

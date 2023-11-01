@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+    <h1>Project Details</h1>
 
-</body>
-</html>
+    <p><strong>Project UID : </strong>{{ project.uid }}</p>
+    <p><strong>Project Title : </strong>{{ project.title }}</p>
+    <p><strong>Type : </strong>{{ project.type }}</p>
+    <p><strong>Theme : </strong>{{ project.theme }}</p>
+    <p><strong>Category : </strong>{{ project.category }}</p>
+    <p><strong>Tech Stack : </strong>{{ project.tech_stack }}</p>
+    <p><a href="{{ project.ppt_link }}">Project PPT</a></p>
+    <p><a href="{{ project.report_link }}">Project Report</a></p>
+
+    <br>
+    <p><strong>Project Mentors :</strong></p>
+    {% for mentor in project.team.mentors %}
+        <ul>
+            <li >
+                <a href="{{ url_for('mentor_dashboard', mentor_email=mentor.email) }}">Mentor#{{ mentor.email }}</a>
+                <ul>
+                    <li>Mentor Name : {{ mentor.name }}</li>
+                    <li>Mentor Institute : {{ mentor.institute }}</li>
+                    <li>Mentor Email : {{ mentor.email }}</li>
+                </ul>
+            </li>
+        </ul>
+    {% endfor %}
+
+    <br>
+    <p><strong>Team Details :</strong></p>
+    <ul>
+        <li >
+            <a href="{{ url_for('team_dashboard', team_uid=project.team.uid) }}">Team#{{ project.team.uid }}</a>
+            <ul>
+                <li>Team Name : {{ project.team.name }}</li>
+                <li>Team Institute : {{ project.team.institute }}</li>
+                <li>Team Leader Email : {{ project.team.leader_email }}</li>
+            </ul>
+        </li>
+    </ul>
+
+{% endblock %}

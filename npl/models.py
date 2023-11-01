@@ -1,15 +1,27 @@
 # flask related dependencies :
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from werkzeug.security import generate_password_hash
+from flask_login import UserMixin
+
 
 # package level dependencies :
 from npl import db, app
+
 
 # other dependencies :
 import datetime
 
 
-class Student(db.Model):
+
+class Theme:
+    pass
+
+
+class Institute:
+    pass
+
+
+class Student(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
@@ -103,40 +115,44 @@ class Team(db.Model):
     password = db.Column(db.String(255), nullable=False)
     create_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     is_approved = db.Column(db.Integer, default=0)
+    mentor_count = db.Column(db.Integer, nullable=False)
 
     members = db.relationship('Student', secondary=team_member, backref='teams')
 
     projects = db.relationship('Project', backref='team')
 
     @staticmethod
-    def add_team(team_uid, team_name, team_institute, team_leader_email, password, team_mem1_email, team_mem2_email, team_mem3_email):
+    def add_team(team_uid, team_name, team_institute, team_leader_email, password, team_mem1_email, team_mem2_email, team_mem3_email, mentor_count):
 
-        team_mem1 = Student.query.filter_by(email=team_mem1_email).first()
-        if not team_mem1:
-            Student.add_student(
-                student_name="default",
-                student_email=team_mem1_email,
-                institute_name="default",
-                password="default"
-            )
+        if team_mem1_email:
+            team_mem1 = Student.query.filter_by(email=team_mem1_email).first()
+            if not team_mem1:
+                Student.add_student(
+                    student_name="default",
+                    student_email=team_mem1_email,
+                    institute_name="default",
+                    password="default"
+                )
 
-        team_mem2 = Student.query.filter_by(email=team_mem2_email).first()
-        if not team_mem2:
-            Student.add_student(
-                student_name="default",
-                student_email=team_mem2_email,
-                institute_name="default",
-                password="default"
-            )
+        if team_mem2_email:
+            team_mem2 = Student.query.filter_by(email=team_mem2_email).first()
+            if not team_mem2:
+                Student.add_student(
+                    student_name="default",
+                    student_email=team_mem2_email,
+                    institute_name="default",
+                    password="default"
+                )
 
-        team_mem3 = Student.query.filter_by(email=team_mem3_email).first()
-        if not team_mem3:
-            Student.add_student(
-                student_name="default",
-                student_email=team_mem3_email,
-                institute_name="default",
-                password="default"
-            )
+        if team_mem3_email:
+            team_mem3 = Student.query.filter_by(email=team_mem3_email).first()
+            if not team_mem3:
+                Student.add_student(
+                    student_name="default",
+                    student_email=team_mem3_email,
+                    institute_name="default",
+                    password="default"
+                )
 
         team = Team(
             uid=team_uid,
@@ -144,11 +160,17 @@ class Team(db.Model):
             institute=team_institute,
             leader_email=team_leader_email,
             password=generate_password_hash(password, "sha256"),
+            mentor_count=mentor_count
         )
 
-        team.members.append(team_mem1)
-        team.members.append(team_mem2)
-        team.members.append(team_mem3)
+        team_leader = Student.query.filter_by(email=team_leader_email).first()
+        team.members.append(team_leader)
+        if team_mem1_email:
+            team.members.append(team_mem1)
+        if team_mem2_email:
+            team.members.append(team_mem2)
+        if team_mem3_email:
+            team.members.append(team_mem3)
 
         db.session.add(team)
         db.session.commit()
@@ -168,12 +190,14 @@ class Project(db.Model):
     tech_stack = db.Column(db.String(255))
     ppt_link = db.Column(db.String(255))
     report_link = db.Column(db.String(255), nullable=False)
+    youtube_link = db.Column(db.String(255))
+    demo_link = db.Column(db.String(255))
     is_approved = db.Column(db.Integer, default=0)
 
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))  # foreign key
 
     @staticmethod
-    def add_project(project_uid, project_title, project_description, project_type, project_theme, project_category, project_tech_stack, project_ppt_link, project_report_link, team_id):
+    def add_project(project_uid, project_title, project_description, project_type, project_theme, project_category, project_tech_stack, project_ppt_link, project_report_link, project_youtube_link, project_demo_link, team_id):
         project = Project(
             uid=project_uid,
             title=project_title,
@@ -184,6 +208,8 @@ class Project(db.Model):
             tech_stack=project_tech_stack,
             ppt_link=project_ppt_link,
             report_link=project_report_link,
+            youtube_link=project_youtube_link,
+            demo_link=project_demo_link,
             team_id=team_id
         )
 

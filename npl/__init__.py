@@ -6,6 +6,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
+from flask_login import LoginManager
+from flask_migrate import Migrate
 
 
 # initiating app object
@@ -27,8 +29,16 @@ elif app.config["ENV"] == 'testing':
 db = SQLAlchemy(app)
 
 
+# initiating db object
+migrate = Migrate(app, db)
+
+
 # initiating mail object
 mail = Mail(app)
+
+
+# initiating login manager
+login_manager = LoginManager(app)
 
 
 from npl import models

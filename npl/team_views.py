@@ -26,7 +26,27 @@ def team_register():
         team_mem3_email = request.form.get("team_mem3_email")
 
         team_mentor1_email = request.form.get("team_mentor1_email")
+        team_mentor1 = Mentor.query.filter_by(email=team_mentor1_email).first()
         team_mentor2_email = request.form.get("team_mentor2_email")
+        team_mentor2 = Mentor.query.filter_by(email=team_mentor2_email).first()
+
+        if not team_leader_email:
+            flash(message="Team leader is required for a team to register.", category="warning")
+            return redirect(url_for('team_register'))
+
+        mentor_count = 0
+        if team_mentor1_email or team_mentor2_email:
+            if team_mentor1_email:
+                mentor_count += 1
+            if team_mentor2_email:
+                mentor_count += 1
+        else:
+            flash(message="At least one mentor is required for a team to register.", category="warning")
+            return redirect(url_for('team_register'))
+
+        if not ((team_mentor1_email and team_mentor1) or (team_mentor2_email and team_mentor2)):
+            flash(message="Mentor with that email doesn't exist.", category="warning")
+            return redirect(url_for('team_register'))
 
         password = request.form.get("password")
         confirm_password = request.form.get("confirm_password")
@@ -45,15 +65,16 @@ def team_register():
                 password=password,
                 team_mem1_email=team_mem1_email,
                 team_mem2_email=team_mem2_email,
-                team_mem3_email=team_mem3_email
+                team_mem3_email=team_mem3_email,
+                mentor_count=mentor_count
             )
 
-            send_ack_mail(email=team_leader_email, ack_info=f"Your Team Id : {team_uid}. Use it to login with your password.")
+            send_ack_mail(email=team_leader_email, ack_info=f"You team is successfully registered. Your Team Id : {team_uid}. You can login with your registered team id and password after your mentor approves your team.")
 
-            send_mentor_approve_team_mail(mentor_email=team_mentor1_email, team_uid=team_uid, team_name=team_name)
-            send_mentor_approve_team_mail(mentor_email=team_mentor2_email, team_uid=team_uid, team_name=team_name)
-
-            send_ack_mail(email=team_leader_email, ack_info="You team is successfully registered. You can login with your registered team id and password after your mentor approves your team.")
+            if team_mentor1_email:
+                send_mentor_approve_team_mail(mentor_email=team_mentor1_email, team_uid=team_uid, team_name=team_name)
+            if team_mentor2_email:
+                send_mentor_approve_team_mail(mentor_email=team_mentor2_email, team_uid=team_uid, team_name=team_name)
 
             flash(message="Your team is registered successfully. You can login with your registered team id and password after your mentor approves your team.", category="success")
             return redirect(url_for('home'))
@@ -101,6 +122,8 @@ def project_upload(team_uid):
         project_tech_stack = request.form.get("project_tech_stack")
         project_ppt_link = request.form.get("project_ppt_link")
         project_report_link = request.form.get("project_report_link")
+        project_youtube_link = request.form.get("project_youtube_link")
+        project_demo_link = request.form.get("project_demo_link")
 
         Project.add_project(
             project_uid=project_uid,
@@ -112,6 +135,8 @@ def project_upload(team_uid):
             project_tech_stack=project_tech_stack,
             project_ppt_link=project_ppt_link,
             project_report_link=project_report_link,
+            project_youtube_link=project_youtube_link,
+            project_demo_link=project_demo_link,
             team_id=team.id
         )
 

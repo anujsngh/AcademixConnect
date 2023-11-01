@@ -1,35 +1,464 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Home Page</h1>
-<br>
-{% for project in projects %}
-{% if project.is_approved %}
-<div class="card text-center w-50">
-    <div class="card-header">
-        <a href="{{ url_for('project_dashboard', project_uid=project.uid) }}">Project#{{ project.uid }}</a>
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">{{ project.title }}</h5>
-        <p class="card-text">{{ project.description }}</p>
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item"><strong>Type : </strong>{{ project.type }}</li>
-        <li class="list-group-item"><strong>Theme : </strong>{{ project.theme }}</li>
-        <li class="list-group-item"><strong>Category : </strong>{{ project.category }}</li>
-        <li class="list-group-item"><strong>Tech Stack : </strong>{{ project.tech_stack }}</li>
-    </ul>
-    <div class="card-body">
-        <a class="card-link" href="{{ project.ppt_link }}">Project PPT</a>
-        <a class="card-link" href="{{ project.report_link }}">Project Report</a>
-    </div>
-    <div class="card-footer text-muted">
-        <p><strong>Team Name : </strong><a href="{{ url_for('team_dashboard', team_uid=project.team.uid) }}">{{ project.team.name }}</a></p>
-    </div>
-</div>
-<br>
-<br>
-{% endif %}
-{% endfor %}
 
-{% endblock %}
+<section class="total-project bg-light p-3 mb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="project-box">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Total Projects</h3>
+                            <p>As per available data</p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="hard">
+                                <h3>{{ num_hard_projs }}</h3>
+                                <p>Hardware</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="soft">
+                                <h3>{{ num_soft_projs }}</h3>
+                                <p>Software</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="prob-statement-panel bg-light p-3 mb-3">
+    <div class="container">
+        <div class="row catBox">
+            <div class="col-md-4">
+                <div class="labelBox">
+                    <label class="form-label" for="technology">Theme</label>
+                </div>
+                <div class="short-by-box">
+                    <select class="form-select sortByPS" id="technology" name="sort-by">
+                        <option selected value="QWxs">All</option>
+                        <option value="MQ==">Agriculture, FoodTech & Rural Development</option>
+                        <option value="Mg==">Blockchain & Cybersecurity</option>
+                        <option value="Mw==">Clean & Green Technology</option>
+                        <option value="NA==">Fitness & Sports</option>
+                        <option value="NQ==">Heritage & Culture</option>
+                        <option value="Ng==">MedTech / BioTech / HealthTech</option>
+                        <option value="Nw==">Miscellaneous</option>
+                        <option value="OA==">Renewable / Sustainable Energy</option>
+                        <option value="OQ==">Robotics and Drones</option>
+                        <option value="MTA=">Smart Automation</option>
+                        <option value="MTE=">Smart Vehicles</option>
+                        <option value="MTI=">Travel & Tourism</option>
+                        <option value="MTM=">Transportation & Logistics</option>
+                        <option value="MTQ=">Disaster Management</option>
+                        <option value="MTU=">Smart Education</option>
+                        <option value="MTU=">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="labelBox">
+                    <label class="form-label" for="category">Category</label>
+                </div>
+                <div class="short-by-box">
+                    <select class="form-select sortByPS" id="category" name="sort-by">
+                        <option selected value="QWxs">All</option>
+                        <option value="U29mdHdhcmU=">Software</option>
+                        <option value="SGFyZHdhcmU=">Hardware</option>
+                        <option value="SGFyZHdhcmU=">Mixed</option>
+                        <option value="SGFyZHdhcmU=">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="labelBox">
+                    <label class="form-label" for="institute">Institute</label>
+                </div>
+                <div class="short-by-box">
+                    <select class="form-select sortByPS" data-live-search="true" data-live-search-style="startsWith"
+                            id="institute"
+                            name="sort-by">
+                        <option selected value="QWxs">All</option>
+                        <option value="QUlDVEUsIE1JQy1TdHVkZW50IElubm92YXRpb24=">AICTE, MIC-Student Innovation</option>
+                        <option value="QWxsIEluZGlhIENvdW5jaWwgZm9yIFRlY2huaWNhbCBFZHVjYXRpb24gKEFJQ1RFKS4=">All India
+                            Council for Technical Education (AICTE).
+                        </option>
+                        <option value="QXV0b2Rlc2sgSW5kaWEgUHZ0LiBMdGQu">Autodesk India Pvt. Ltd.</option>
+                        <option value="QmFqYWogRmluc2VydiBIZWFsdGg=">Bajaj Finserv Health</option>
+                        <option value="Q2VudHJhbCBHcm91bmQgV2F0ZXIgQm9hcmQgKENHV0IpLCBNaW5pc3RyeSBvZiBKYWwgU2hha3Rp">
+                            Central Ground Water Board (CGWB), Ministry of Jal Shakti
+                        </option>
+                        <option value="Q2VudHJhbCBXYXRlciBDb21taXNzaW9uIChDV0MpLCBNaW5pc3RyeSBvZiBKYWwgU2hha3Rp">Central
+                            Water Commission (CWC), Ministry of Jal Shakti
+                        </option>
+                        <option value="Q29hbCBJbmRpYSBMaW1pdGVk">Coal India Limited</option>
+                        <option value="Q29tbXVuaWNhdGlvbiBhbmQgSW5mb3JtYXRpb24gc2VydmljZSwgTUhB">Communication and
+                            Information service, MHA
+                        </option>
+                        <option value="Q3liZXIgQ3JpbWUgVW5pdCwgU3BlY2lhbCBDZWxsLCBEZWxoaSBQb2xpY2UsIE1IQQ==">Cyber Crime
+                            Unit, Special Cell, Delhi Police, MHA
+                        </option>
+                        <option value="RGFpcnkgRGl2aXNpb24sIERlcGFydG1lbnQgb2YgQW5pbWFsIEh1c2JhbmRyeSAmIERhaXJ5aW5nLCBNaW5pc3RyeSBvZiBGaXNoZXJpZXMsIEFuaW1hbCBIdXNiYW5kcnkgJiBEYWlyeWluZw==">
+                            Dairy Division, Department of Animal Husbandry & Dairying, Ministry of Fisheries, Animal
+                            Husbandry & Dairying
+                        </option>
+                        <option value="RGVmZW5jZSBSZXNlYXJjaCBhbmQgRGV2ZWxvcG1lbnQgT3JnYW5pc2F0aW9uIChEUkRPKSwgTWluaXN0cnkgb2YgRGVmZW5jZS4=">
+                            Defence Research and Development Organisation (DRDO), Ministry of Defence.
+                        </option>
+                        <option value="RGVsbCBUZWNobm9sb2dpZXMsIEJhbmdhbG9yZSwgSW5kaWEu">Dell Technologies, Bangalore,
+                            India.
+                        </option>
+                        <option value="RGVwYXJ0bWVudCBvZiBFbXBvd2VybWVudCBvZiBQZXJzb25zIHdpdGggRGlzYWJpbGl0aWVzKERpdnlhbmdqYW4pICwgTWluaXN0cnkgb2YgU29jaWFsIEp1c3RpY2UgYW5kIEVtcG93ZXJtZW50">
+                            Department of Empowerment of Persons with Disabilities(Divyangjan) , Ministry of Social
+                            Justice and Empowerment
+                        </option>
+                        <option value="RGVwYXJ0bWVudCBvZiBGb29kICYgUHVibGljIERpc3RyaWJ1dGlvbiwgTWluaXN0cnkgb2YgQ29uc3VtZXIgQWZmYWlycyBGb29kIGFuZCBQdWJsaWMgRGlzdHJpYnV0aW9u">
+                            Department of Food & Public Distribution, Ministry of Consumer Affairs Food and Public
+                            Distribution
+                        </option>
+                        <option value="RGVwYXJ0bWVudCBvZiBQb3N0LCBNaW5pc3RyeSBvZiBQb3N0">Department of Post, Ministry of
+                            Post
+                        </option>
+                        <option value="RGVwYXJ0bWVudCBvZiBTY2hvb2wgRWR1Y2F0aW9uICYgTGl0ZXJhY3kgKERvU0VMKSwgTWluaXN0cnkgb2YgRWR1Y2F0aW9uLg==">
+                            Department of School Education & Literacy (DoSEL), Ministry of Education.
+                        </option>
+                        <option value="RGVwYXJ0bWVudCBvZiBTY2llbmNlICYgVGVjaG5vbG9neSAoRG9TVCksIE1pbmlzdHJ5IG9mIFNjaWVuY2UgYW5kIFRlY2hub2xvZ3ku">
+                            Department of Science & Technology (DoST), Ministry of Science and Technology.
+                        </option>
+                        <option value="RGVwYXJ0bWVudCBvZiBTb2NpYWwgSnVzdGljZSAmIEVtcG93ZXJtZW50LCBNaW5pc3RyeSBvZiBTb2NpYWwgSnVzdGljZSBhbmQgRW1wb3dlcm1lbnQ=">
+                            Department of Social Justice & Empowerment, Ministry of Social Justice and Empowerment
+                        </option>
+                        <option value="RGVwYXJ0bWVudCBvZiBTcGFjZSwgSW5kaWFuIFNwYWNlIFJlc2VhcmNoIE9yZ2FuaXNhdGlvbiAoSVNSTyku">
+                            Department of Space, Indian Space Research Organisation (ISRO).
+                        </option>
+                        <option value="RGVwYXJ0bWVudCBvZiBTcG9ydHMgKERvUyksIE1pbmlzdHJ5IG9mIFlvdXRoIEFmZmFpcnMgJiBTcG9ydHMu">
+                            Department of Sports (DoS), Ministry of Youth Affairs & Sports.
+                        </option>
+                        <option value="RGVwYXJ0bWVudCBvZiBUZWxlY29tbXVuaWNhdGlvbnMgKERvVCksIE1pbmlzdHJ5IG9mIENvbW11bmljYXRpb25zLg==">
+                            Department of Telecommunications (DoT), Ministry of Communications.
+                        </option>
+                        <option value="ZUNvdXJ0cywgRGVwYXJ0bWVudCBvZiBKdXN0aWNlLCBNaW5pc3RyeSBvZiBMYXcgJiBKdXN0aWNl">
+                            eCourts, Department of Justice, Ministry of Law & Justice
+                        </option>
+                        <option value="R2FzIEF1dGhvcml0eSBvZiBJbmRpYSBMdGQgKEdBSUwpLg==">Gas Authority of India Ltd
+                            (GAIL).
+                        </option>
+                        <option value="R0UgSGVhbHRoY2FyZQ==">GE Healthcare</option>
+                        <option value="R292ZXJubWVudCBvZiBNYWhhcmFzaHRyYS4=">Government of Maharashtra.</option>
+                        <option value="R292ZXJubWVudCBvZiBSYWphc3RoYW4g">Government of Rajasthan</option>
+                        <option value="R292ZXJubWVudCBvZiBVdHRhcmFraGFuZA==">Government of Uttarakhand</option>
+                        <option value="SW5kaWEgTWV0ZW9yb2xvZ2ljYWwgRGVwYXJ0bWVudCAoSU1EKSwgTWluaXN0cnkgb2YgRWFydGggU2NpZW5jZXMgKE1vRVMpLg==">
+                            India Meteorological Department (IMD), Ministry of Earth Sciences (MoES).
+                        </option>
+                        <option value="SW5kaWFuIENvdW5jaWwgZm9yIEN1bHR1cmFsIFJlbGF0aW9ucyAoSUNDUiku">Indian Council for
+                            Cultural Relations (ICCR).
+                        </option>
+                        <option value="SW5kaWFuIEtub3dsZWRnZSBTeXN0ZW0gKElLUyksIEFsbCBJbmRpYSBDb3VuY2lsIGZvciBUZWNobmljYWwgRWR1Y2F0aW9uIChBSUNURSk=">
+                            Indian Knowledge System (IKS), All India Council for Technical Education (AICTE)
+                        </option>
+                        <option value="SW5kaWFuIE5hdGlvbmFsIENlbnRyZSBmb3IgT2NlYW4gSW5mb3JtYXRpb24gU2VydmljZXMgKElOQ09JUyksIE1pbmlzdHJ5IG9mIEVhcnRoIFNjaWVuY2VzIChNb0VTKS4=">
+                            Indian National Centre for Ocean Information Services (INCOIS), Ministry of Earth Sciences
+                            (MoES).
+                        </option>
+                        <option value="SW50ZXJuYXRpb25hbCBDb3VuY2lsIGZvciBDaXJjdWxhciBFY29ub215IChJQ0NFKS4=">
+                            International Council for Circular Economy (ICCE).
+                        </option>
+                        <option value="SVRCUCwgTUhB">ITBP, MHA</option>
+                        <option value="TWFkaHlhIFByYWRlc2ggUG9saWNlLg==">Madhya Pradesh Police.</option>
+                        <option value="TWF0aFdvcmtz">MathWorks</option>
+                        <option value="TUlD">MIC</option>
+                        <option value="TWluaXN0cnkgb2YgQXl1cnZlZGEsIFlvZ2EsIE5hdHVyb3BhdGh5LCBVbmFuaSwgU2lkZGhhLCBTb3dhLVJpZ3BhIGFuZCBIb21vZW9wYXRoeSAoQVlVU0gpLg==">
+                            Ministry of Ayurveda, Yoga, Naturopathy, Unani, Siddha, Sowa-Rigpa and Homoeopathy (AYUSH).
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgQ2hlbWljYWxzIGFuZCBGZXJ0aWxpemVycw==">Ministry of Chemicals and
+                            Fertilizers
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgQ29uc3VtZXIgQWZmYWlycw==">Ministry of Consumer Affairs</option>
+                        <option value="TWluaXN0cnkgb2YgQ3VsdHVyZQ==">Ministry of Culture</option>
+                        <option value="TWluaXN0cnkgb2YgRWxlY3Ryb25pY3MgYW5kIEluZm9ybWF0aW9uIFRlY2hub2xvZ3kgKE1FSVRZKS4=">
+                            Ministry of Electronics and Information Technology (MEITY).
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgRXh0ZXJuYWwgQWZmYWlycyAoTUVBKQ==">Ministry of External Affairs
+                            (MEA)
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgRmluYW5jZQ==">Ministry of Finance</option>
+                        <option value="TWluaXN0cnkgb2YgSG91c2luZyBhbmQgVXJiYW4gQWZmYWlycw==">Ministry of Housing and
+                            Urban Affairs
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgTGFib3VyICYgRW1wbG95bWVudA==">Ministry of Labour & Employment
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgTWljcm8sIFNtYWxsICYgTWVkaXVtIEVudGVycHJpc2VzIChNU01FKS4=">
+                            Ministry of Micro, Small & Medium Enterprises (MSME).
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgTWluZXM=">Ministry of Mines</option>
+                        <option value="TWluaXN0cnkgb2YgUG9ydHMsIFNoaXBwaW5nICYgV2F0ZXJ3YXlz">Ministry of Ports, Shipping
+                            & Waterways
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgUnVyYWwgRGV2ZWxvcG1lbnQ=">Ministry of Rural Development</option>
+                        <option value="TWluaXN0cnkgb2YgU2tpbGwgRGV2ZWxvcG1lbnQgYW5kIEVudHJlcHJlbmV1cnNoaXAgKE1TREUpLg==">
+                            Ministry of Skill Development and Entrepreneurship (MSDE).
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgU29jaWFsIEp1c3RpY2UgYW5kIEVtcG93ZXJtZW50LCBDb21wb3NpdGUgUmVnaW9uYWwgQ2VudHJlIChDUkMgU3JpbmFnYXIpLCBEZXBhcnRtZW50IG9mIEVtcG93ZXJtZW50IG9mIFBlcnNvbnMgd2l0aCBEaXNhYmlsaXRpZXMuCg==">
+                            Ministry of Social Justice and Empowerment, Composite Regional Centre (CRC Srinagar),
+                            Department of Empowerment of Persons with Disabilities.
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgU29jaWFsIEp1c3RpY2UgYW5kIEVtcG93ZXJtZW50LCBDb21wb3NpdGUgUmVnaW9uYWwgQ2VudHJlIChDUkMgU3JpbmFnYXIpLCBEZXBhcnRtZW50IG9mIEVtcG93ZXJtZW50IG9mIFBlcnNvbnMgd2l0aCBEaXNhYmlsaXRpZXMu">
+                            Ministry of Social Justice and Empowerment, Composite Regional Centre (CRC Srinagar),
+                            Department of Empowerment of Persons with Disabilities.
+                        </option>
+                        <option value="TWluaXN0cnkgb2YgVG91cmlzbQ==">Ministry of Tourism</option>
+                        <option value="TmFyY290aWNzIENvbnRyb2wgQnVyZWF1IChOQ0IpLg==">Narcotics Control Bureau (NCB).
+                        </option>
+                        <option value="TkFUR1JJRCwgTUhB">NATGRID, MHA</option>
+                        <option value="TmF0aW9uYWwgQXNzZXNzbWVudCBhbmQgQWNjcmVkaXRhdGlvbiBDb3VuY2lsIChOQUFDKS4=">
+                            National Assessment and Accreditation Council (NAAC).
+                        </option>
+                        <option value="TmF0aW9uYWwgQ291bmNpbCBvZiBFZHVjYXRpb25hbCBSZXNlYXJjaCBhbmQgVHJhaW5pbmcgKE5DRVJUKSwgRGVwYXJ0bWVudCBvZiBTY2hvb2wgRWR1Y2F0aW9uICYgTGl0ZXJhY3kgKERvU0VMKS4=">
+                            National Council of Educational Research and Training (NCERT), Department of School
+                            Education & Literacy (DoSEL).
+                        </option>
+                        <option value="TmF0aW9uYWwgRGlnaXRhbCBFZHVjYXRpb24gQXJjaGl0ZWN0dXJlIChOREVBUiksIERlcGFydG1lbnQgb2YgU2Nob29sIEVkdWNhdGlvbiAmIExpdGVyYWN5IChEb1NFTCku">
+                            National Digital Education Architecture (NDEAR), Department of School Education & Literacy
+                            (DoSEL).
+                        </option>
+                        <option value="TmF0aW9uYWwgRGlzYXN0ZXIgUmVzcG9uc2UgRm9yY2UgKE5EUkYpLg==">National Disaster
+                            Response Force (NDRF).
+                        </option>
+                        <option value="TmF0aW9uYWwgSW5zdGl0dXRlIGZvciBFbXBvd2VybWVudCBvZiBQZXJzb25zIHdpdGggTXVsdGlwbGUgRGlzYWJpbGl0aWVzIChOSUVQTUQpLCBNaW5pc3RyeSBvZiBTb2NpYWwgSnVzdGljZSAmIEVtcG93ZXJtZW50Lg==">
+                            National Institute for Empowerment of Persons with Multiple Disabilities (NIEPMD), Ministry
+                            of Social Justice & Empowerment.
+                        </option>
+                        <option value="TmF0aW9uYWwgSW5zdGl0dXRlIG9mIERlc2lnbiBNYWRoeWEgUHJhZGVzaA==">National Institute
+                            of Design Madhya Pradesh
+                        </option>
+                        <option value="TmF0aW9uYWwgSW5zdGl0dXRlIG9mIE9jZWFuIFRlY2hub2xvZ3kgKE5JT1QpLCBNaW5pc3RyeSBvZiBFYXJ0aCBTY2llbmNlcyAoTW9FUyku">
+                            National Institute of Ocean Technology (NIOT), Ministry of Earth Sciences (MoES).
+                        </option>
+                        <option value="TmF0aW9uYWwgTWlzc2lvbiAgZm9yIENsZWFuIEdhbmdhIChOTUNHKSwgTWluaXN0cnkgb2YgSmFsIFNoYWt0aQ==">
+                            National Mission for Clean Ganga (NMCG), Ministry of Jal Shakti
+                        </option>
+                        <option value="TmF0aW9uYWwgV2F0ZXIgTWlzc2lvbiAoTldNKSwgTWluaXN0cnkgb2YgSmFsIFNoYWt0aQ==">
+                            National Water Mission (NWM), Ministry of Jal Shakti
+                        </option>
+                        <option value="TklGVEVNIFRoYW5qYXZ1ciAsTWluaXN0cnkgb2YgRm9vZCBQcm9jZXNzaW5nIEluZHVzdHJpZXMgKE1vRlBJKQ==">
+                            NIFTEM Thanjavur ,Ministry of Food Processing Industries (MoFPI)
+                        </option>
+                        <option value="Tm9ydGggRWFzdGVybiBDYW5lIGFuZCBCYW1ib28gRGV2ZWxvcG1lbnQgQ291bmNpbCAoTkVDQkRDKS4=">
+                            North Eastern Cane and Bamboo Development Council (NECBDC).
+                        </option>
+                        <option value="UG9saWN5IFBsYW5uaW5nIENlbGwsIE1pbmlzdHJ5IG9mIEluZm9ybWF0aW9uICYgQnJvYWRjYXN0aW5n">
+                            Policy Planning Cell, Ministry of Information & Broadcasting
+                        </option>
+                        <option value="U3RhcnR1cCBJbmRpYSBTZWN0aW9uLCBEZXBhcnRtZW50IGZvciBQcm9tb3Rpb24gb2YgSW5kdXN0cnkgYW5kIEludGVybmFsIFRyYWRlIChEUElUKSwgTWluaXN0cnkgb2YgQ29tbWVyY2UgYW5kIEluZHVzdHJ5Lg==">
+                            Startup India Section, Department for Promotion of Industry and Internal Trade (DPIT),
+                            Ministry of Commerce and Industry.
+                        </option>
+                        <option value="U3dhY2hoIEJoYXJhdCBNaXNzaW9uIChHcmFtZWVuKSwgRGVwYXJ0bWVudCBvZiBEcmlua2luZyBXYXRlciAmIFNhbml0YXRpb24sIE1pbmlzdHJ5IG9mIEphbCBTaGFrdGk=">
+                            Swachh Bharat Mission (Grameen), Department of Drinking Water & Sanitation, Ministry of Jal
+                            Shakti
+                        </option>
+                        <option value="VW5pdmVyc2l0eSBHcmFudHMgQ29tbWlzc2lvbiAoVUdDKS4=">University Grants Commission
+                            (UGC).
+                        </option>
+                        <option value="Vm9sdm8=">Volvo</option>
+                        <option value="V2hpdGUgSG91ciBTb2x1dGlvbnM=">White Hour Solutions</option>
+                    </select>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="row catBox1 mt-4">
+            <div class="col mx-1">
+                <div class="radioButPS">
+                    <label><input checked name="organization_type" type="radio" value="QWxs"> <span
+                            class="Filter_label">All</span></label>
+                </div>
+            </div>
+            <div class="col mx-1">
+                <div class="radioButPS">
+                    <label><input name="organization_type" type="radio" value="Mg=="> <span class="Filter_label">State Government</span></label>
+                </div>
+            </div>
+            <div class="col mx-1">
+                <div class="radioButPS">
+                    <label><input name="organization_type" type="radio" value="MQ=="> <span class="Filter_label">Central Ministry</span></label>
+                </div>
+            </div>
+            <div class="col mx-1">
+                <div class="radioButPS">
+                    <label><input name="organization_type" type="radio" value="Nw=="> <span class="Filter_label">Industry Personnel</span></label>
+                </div>
+            </div>
+            <div class="col mx-1">
+                <div class="radioButPS">
+                    <label><input name="organization_type" type="radio" value="OQ=="> <span class="Filter_label">Student Innovation</span></label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </section>
+
+<div class="d-flex justify-content-center align-items-center">
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover caption-top align-middle" id="dataTablePS" style="width:100%">
+        <caption>List of Projects</caption>
+        <thead class="table-group-divider table-secondary">
+        <tr>
+            <th>S.No.</th>
+            <th>Project's UID</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Theme</th>
+            <th>Category</th>
+            <th>Tech Stack Used</th>
+            <th>Institute</th>
+            <th>Team</th>
+        </tr>
+        </thead>
+
+        <tbody class="table-group-divider">
+
+        {% if projects %}
+        {% for project in projects %}
+        {% if project.is_approved == project.team.mentor_count %}
+        <tr>
+            <td>{{ project.id }}</td>
+            <td>{{ project.uid }}</td>
+
+            <td>
+                <a class="text-primary" data-bs-target="#staticBackdrop{{project.id}}" data-bs-toggle="modal" style="text-decoration:none ;cursor: pointer">
+                    {{ project.title }}
+                </a>
+
+                <!-- Modal -->
+                <div aria-hidden="true" aria-labelledby="staticBackdropLabel" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="staticBackdrop{{project.id}}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Project Details</h5>
+                                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                        type="button"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-bordered table-hover" id="settings">
+                                    <thead>
+
+                                    <tr>
+                                        <th>Title</th>
+                                        <td>{{ project.title }}</td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <th style="vertical-align: top;">Description</th>
+                                        <td>
+                                            <div class="style-2" style="overflow-y: auto; min-height:20px; max-height: 200px; width:100%;">
+                                                {{ project.description }}
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <th>Institute</th>
+                                        <td>{{ project.team.institute }}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>Type</th>
+                                        <td>{{ project.type }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Theme</th>
+                                        <td>{{ project.theme }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Category</th>
+                                        <td>{{ project.category }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tech Stack</th>
+                                        <td>{{ project.tech_stack}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>PPT Link</th>
+                                        <td>
+                                            <a href="{{ project.ppt_link }}" target="_blank">{{ project.ppt_link }}</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Report Link</th>
+                                        <td>
+                                            <a href="{{ project.report_link }}" target="_blank">{{ project.report_link }}</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Youtube Link</th>
+                                        <td>
+                                            <a href="#" target="_blank"> </a>
+                                        </td>
+                                    </tr>
+
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                                <a type="button" class="btn btn-primary" href="{{ url_for('project_dashboard', project_uid=project.uid) }}">View More Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </td>
+
+            <td>{{ project.type }}</td>
+            <td>{{ project.theme }}</td>
+            <td>{{ project.category }}</td>
+            <td>{{ project.tech_stack }}</td>
+            <td>{{ project.team.institute }}</td>
+            <td><a style="text-decoration:none" href="{{ url_for('team_dashboard', team_uid=project.team.uid) }}">{{ project.team.name }}</a></td>
+        </tr>
+
+
+
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+        </tbody>
+
+        <tfoot class="table-group-divider table-light">
+        <tr>
+            <th>S.No.</th>
+            <th>Project's UID</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Theme</th>
+            <th>Category</th>
+            <th>Tech Stack Used</th>
+            <th>Institute</th>
+            <th>Team</th>
+        </tr>
+        </tfoot>
+
+    </table>
+
+</div>
+
+
+</div>
+    {% endblock %}
