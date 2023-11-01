@@ -1,9 +1,12 @@
+import os
+
+
 class BaseConfig(object):
     DEBUG = False
     TESTING = False
 
     # configuring secret key
-    SECRET_KEY = '479366fd70548d7cdc02ac54f4eb8943c2e5b7176f09438e08155b355dcad51e'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 
     # configuration of mail
     MAIL_SERVER = 'smtp.gmail.com'
@@ -24,9 +27,9 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # configuration of mail
-    MAIL_DEFAULT_SENDER = 'national.projects.library@gmail.com'
-    MAIL_USERNAME = 'national.projects.library@gmail.com'
-    MAIL_PASSWORD = 'butndqvnuzfjongw'
+    MAIL_DEFAULT_SENDER = os.environ.get('MAIL_USERNAME')
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 
 
 class TestingConfig(BaseConfig):
