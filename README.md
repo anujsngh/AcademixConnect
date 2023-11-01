@@ -1,8 +1,9 @@
-<h3>AcademixConnect</h3>
+# AcademixConnect
 
-<h5>Description :</h5> Showcase and Shine: Our platform provides a credible space for students to exhibit their academic projects to peers and potential recruiters, all verified by respective mentors and guides, ensuring credibility and fostering meaningful connections within the academic community.
-<br>
-<br>
+### Description:
+
+Showcase and Shine: Our platform provides a credible space for students to exhibit their academic projects to peers and potential recruiters, all verified by respective mentors and guides, ensuring credibility and fostering meaningful connections within the academic community.
+
 Flow of a project submission on the platform:
 
 1) Team leader will register his team.
