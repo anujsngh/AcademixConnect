@@ -2,7 +2,7 @@
 
 ### Description:
 
-Showcase and Shine: Our platform provides a credible space for students to exhibit their academic projects to peers and potential recruiters, all verified by respective mentors and guides, ensuring credibility and fostering meaningful connections within the academic community.
+This platform provides a credible space for students to exhibit their academic projects to peers and potential recruiters, all verified by respective mentors and guides, ensuring credibility and fostering meaningful connections within the academic community.
 
 Flow of a project submission on the platform:
 
