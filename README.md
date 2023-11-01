@@ -1,7 +1,8 @@
-<h3>Digital Library of Projects</h3>
+<h3>AcademixConnect</h3>
 
-Description : A platform to showcase academic projects.
-
+<h5>Description :</h5> Showcase and Shine: Our platform provides a credible space for students to exhibit their academic projects to peers and potential recruiters, all verified by respective mentors and guides, ensuring credibility and fostering meaningful connections within the academic community.
+<br>
+<br>
 Flow of a project submission on the platform:
 
 1) Team leader will register his team.
@@ -18,7 +19,7 @@ Anupam Pandey [Github : https://github.com/Anupam199949]
 
 Akash Kumar Singh [Github : https://github.com/THEAKS1]
 
-Anuj Singh [Github : https://github.com/anuj-s1ngh/]
+Anuj Singh [Github : https://github.com/anujsngh/]
 
 Mahima Harinkhere [Github : ]
 
